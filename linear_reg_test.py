@@ -35,10 +35,3 @@ plt.legend()
 plt.title("Linear Regression: GD vs Sklearn")
 plt.show()
 
-# -------------------------------------------------
-# Plot loss curve of your GD
-plt.plot(gd_history)
-plt.xlabel("Epoch")
-plt.ylabel("MSE Loss")
-plt.title("Training Loss (GD)")
-plt.show()

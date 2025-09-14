@@ -1,39 +1,33 @@
-import numpy as np
+import numpy as np 
 
 class LinearRegressionClosedForm:
-    def __init__(self, method="lstsq"):  # "lstsq" | "pinv" | "solve"
-        self.method = method
-        self.w = None  # (D,)
-        self.b = None  # scalar
+    def __init__(self):
+        self.w = None
+        self.b = None 
+    
+    def as_2d(self,x):
+        x = np.asarray(x,dtype=float)
+        if x.ndim == 1:
+            x = x.reshape(-1,1)
+        return x
+    
+    def fit(self,X,y):
+        X = self.as_2d(X)
+        y = self.as_2d(y)
+        N, D = X.shape
 
-    def _as_2d(self, X):
-        X = np.asarray(X, float)
-        if X.ndim == 1:
-            X = X.reshape(-1, 1)
-        return X
-
-    def fit(self, X, y):
-        X = self._as_2d(X)
-        y = np.asarray(y, float).reshape(-1)
-        N = X.shape[0]
-        X_aug = np.c_[X, np.ones(N)]
-
-        if self.method == "lstsq":
-            theta, *_ = np.linalg.lstsq(X_aug, y, rcond=None)
-        elif self.method == "pinv":
-            theta = np.linalg.pinv(X_aug) @ y
-        elif self.method == "solve":
-            XtX = X_aug.T @ X_aug
-            Xty = X_aug.T @ y
-            theta = np.linalg.solve(XtX, Xty)
-        else:
-            raise ValueError("method must be 'lstsq', 'pinv', or 'solve'")
-
+        X_aug = np.hstack([X,np.ones((N,1))])
+        theta =  np.linalg.inv(X_aug.T @ X_aug) @ X_aug.T @ y 
         self.w = theta[:-1]
-        print(theta)
-        self.b = float(theta[-1])
-        return self
-
-    def predict(self, X):
-        X = self._as_2d(X)
+        self.b = theta[-1]
+    
+    def loss(self,y_pred,y_true):
+        return np.mean((y_pred-y_true)**2)
+    
+    def predict(self,X):
+        X = self.as_2d(X)
         return X @ self.w + self.b
+    
+    def fit_predict(self,X,y):
+        self.fit(X,y)
+        return self.predict(X)
