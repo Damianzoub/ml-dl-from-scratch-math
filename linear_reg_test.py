@@ -11,10 +11,10 @@ true_w , true_b= 2.0 , 1.0
 y = true_w * X + true_b + rng.normal(0,1.0,size=(N,1)) 
 
 #1) Traind GD model 
-gd_model = LinearRegressionClosedForm()
+gd_model = LinearRegressionClosedForm(method='gradient_descent', learning_rate=0.01)
 gd_history = gd_model.fit(X,y)
-print(f"GD model learned w: w={gd_model.w}")
-print(f"GD model learned b: b={gd_model.b}")
+print(f"GD model learned w: w={gd_model.weights}")
+print(f"GD model learned b: b={gd_model.bias}")
 
 sk_linear = SKLinearRegression()
 sk_linear.fit(X,y)
