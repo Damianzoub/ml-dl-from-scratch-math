@@ -19,5 +19,3 @@ This project is intended solely for personal learning and exploration. The imple
 ## How to Use
 You are welcome to explore the code, mathematical explanations, and derivations provided in this repository. While contributions and feedback are appreciated, the primary intent is to serve as a self-contained learning resource. Feel free to adapt the content for your own educational purposes.
 
-## License
-This project is licensed under the MIT License, allowing for open use and modification. Please refer to the `LICENSE` file for more details.
